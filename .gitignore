@@ -1,0 +1,5 @@
+/storage/*.key
+/vendor
+.env
+/bootstrap/cache/*
+/storage/framework/*
