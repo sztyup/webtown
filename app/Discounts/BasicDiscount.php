@@ -17,9 +17,9 @@ class BasicDiscount implements DiscountInterface
         $discount = 0;
 
         /** @var Product[] $products */
-        foreach ($cart as $id => $products) {
-            $amount = floor(count($products) / self::COUNT);
-            $discount += $amount * $products[0]->getPrice();
+        foreach ($cart->getProducts() as $products) {
+            $amount = floor($products['amount'] / self::COUNT);
+            $discount += $amount * $products['type']->getPrice();
         }
 
         return $discount;

@@ -3,11 +3,13 @@
 namespace App;
 
 use App\Discounts\DiscountInterface;
-use Illuminate\Support\Collection;
 
 class Cart
 {
-    protected $products;
+    /**
+     * @var array|Product[]
+     */
+    protected $products = [];
 
     protected $discount;
 
@@ -17,11 +19,19 @@ class Cart
      * Adds the given product to the cart
      *
      * @param Product $product
+     * @param $amount
      * @return $this
      */
-    public function addProduct(Product $product)
+    public function addProduct(Product $product, int $amount)
     {
-        $this->products[$product->getId()][] = $product;
+        if (!in_array($product->getId(), $this->products)) {
+            $this->products[$product->getId()] = [
+                'type' => $product,
+                'amount' => $amount
+            ];
+        } else {
+            $this->products[$product->getId()]['amount'] += $amount;
+        }
 
         return $this;
     }
@@ -36,14 +46,30 @@ class Cart
         return $this->products;
     }
 
-    public function getPrice()
+    public function getOriginalPrice()
     {
-        return Collection::make($this->products)->map->getPrice()->sum();
+        $price = 0;
+
+        foreach ($this->products as $product) {
+            $price = $product['amount'] * $product['type']->getPrice();
+        }
+
+        return $price;
+    }
+
+    public function getFinalPrice()
+    {
+        return $this->finalPrice ?? $this->getOriginalPrice();
+    }
+
+    public function getDiscount()
+    {
+        return $this->discount;
     }
 
     public function applyDiscount(DiscountInterface $discount, int $amount)
     {
         $this->discount = $discount;
-        $this->finalPrice = $this->getPrice() - $amount;
+        $this->finalPrice = $this->getOriginalPrice() - $amount;
     }
 }

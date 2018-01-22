@@ -15,10 +15,10 @@ class MegapackDiscount implements DiscountInterface
         $discount = 0;
 
         /** @var Product[] $products */
-        foreach ($cart->getProducts() as $productId => $products) {
-            if ($products[0]->isMegapack()) {
-                $amount = floor(count($products) / self::AMOUNT);
-                $discount += $amount * $products[0]->getPrice();
+        foreach ($cart->getProducts() as $product) {
+            if ($product['type']->isMegapack()) {
+                $amount = floor($product['amount'] / self::AMOUNT);
+                $discount += $amount * $product['type']->getPrice();
             }
         }
 
