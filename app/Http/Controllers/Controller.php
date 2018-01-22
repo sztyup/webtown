@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cart;
+use App\CurrencyExchange;
 use App\Manager;
 use App\Product;
 use Illuminate\Http\Request;
@@ -60,7 +61,8 @@ class Controller extends BaseController
 
         return view('index', [
             'cart' => $cart,
-            'products' => $this->getDefaultProducts()
+            'products' => $this->getDefaultProducts(),
+            'exchanger' => new CurrencyExchange('EUR')
         ]);
     }
 }
