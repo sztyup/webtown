@@ -14,7 +14,7 @@ class Product
 
     public function __construct(string $name, int $price, bool $megapack = false)
     {
-        $this->id = uniqid();
+        $this->id = md5($name);
         $this->name = $name;
         $this->price = $price;
         $this->megapack = $megapack;
