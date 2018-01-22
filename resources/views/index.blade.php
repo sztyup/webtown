@@ -20,7 +20,10 @@
                     name="{{ $product->getId() }}"
                     type="number"
                     step="1"
-                    value="{{ old($product->getId(), 0) }}"
+                    value="{{ old(
+                        $product->getId(),
+                        isset($cart) ? $cart->getAmountOf($product) : 0
+                    ) }}"
             >
             @if ($errors->has($product->getId()))
             <span class="help-block">
