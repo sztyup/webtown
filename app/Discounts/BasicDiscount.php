@@ -7,6 +7,8 @@ use App\Product;
 
 class BasicDiscount implements DiscountInterface
 {
+    const NAME = '1-et fizet, kettőt kap';
+
     /** The amount from where the discount should be applied */
     const COUNT = 3;
 
@@ -21,5 +23,10 @@ class BasicDiscount implements DiscountInterface
         }
 
         return $discount;
+    }
+
+    public function getName(): string
+    {
+        return self::NAME;
     }
 }

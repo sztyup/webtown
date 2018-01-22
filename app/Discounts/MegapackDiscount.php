@@ -7,6 +7,7 @@ use App\Product;
 
 class MegapackDiscount implements DiscountInterface
 {
+    const NAME = 'megapack';
     const AMOUNT = 12;
 
     public function calculateDiscount(Cart $cart): int
@@ -22,5 +23,10 @@ class MegapackDiscount implements DiscountInterface
         }
 
         return $discount;
+    }
+
+    public function getName(): string
+    {
+        return self::NAME;
     }
 }
