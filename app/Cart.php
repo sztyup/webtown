@@ -2,13 +2,16 @@
 
 namespace App;
 
+use App\Discounts\DiscountInterface;
+use Illuminate\Support\Collection;
+
 class Cart
 {
     protected $products;
 
-    public function __construct()
-    {
-    }
+    protected $discount;
+
+    protected $finalPrice;
 
     /**
      * Adds the given product to the cart
@@ -31,5 +34,16 @@ class Cart
     public function getProducts()
     {
         return $this->products;
+    }
+
+    public function getPrice()
+    {
+        return Collection::make($this->products)->map->getPrice()->sum();
+    }
+
+    public function applyDiscount(DiscountInterface $discount, int $amount)
+    {
+        $this->discount = $discount;
+        $this->finalPrice = $this->getPrice() - $amount;
     }
 }
