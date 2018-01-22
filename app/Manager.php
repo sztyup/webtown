@@ -23,10 +23,19 @@ class Manager
         }
     }
 
+    /**
+     * Determines which discount is the best for the given cart, and applies that to it
+     *
+     * @param Cart $cart
+     */
     public function processCart(Cart $cart)
     {
+        /** @var int $max */
         $max = 0;
+
+        /** @var DiscountInterface Holds the so far best discount $biggest */
         $biggest = null;
+
         foreach ($this->discounts as $discount) {
             $current = $discount->calculateDiscount($cart);
 
@@ -36,6 +45,7 @@ class Manager
             }
         }
 
+        // If there is any applicable discount
         if ($biggest) {
             $cart->applyDiscount($biggest, $max);
         }

@@ -15,5 +15,8 @@ interface DiscountInterface
      */
     public function calculateDiscount(Cart $cart): int;
 
+    /**
+     * @return string The display name of the discount
+     */
     public function getName(): string;
 }
