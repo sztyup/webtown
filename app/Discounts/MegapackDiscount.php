@@ -8,7 +8,8 @@ use App\Product;
 class MegapackDiscount implements DiscountInterface
 {
     const NAME = 'megapack';
-    const AMOUNT = 12;
+    const COUNT = 12;
+    const AMOUNT = 6000;
 
     public function calculateDiscount(Cart $cart): int
     {
@@ -17,8 +18,8 @@ class MegapackDiscount implements DiscountInterface
         /** @var Product[] $products */
         foreach ($cart->getProducts() as $product) {
             if ($product['type']->isMegapack()) {
-                $amount = floor($product['amount'] / self::AMOUNT);
-                $discount += $amount * $product['type']->getPrice();
+                $amount = floor($product['amount'] / self::COUNT);
+                $discount += $amount * self::AMOUNT;
             }
         }
 
