@@ -24,6 +24,10 @@ class Cart
      */
     public function addProduct(Product $product, int $amount)
     {
+        if ($amount == 0) {
+            return $this;
+        }
+
         if (!in_array($product->getId(), $this->products)) {
             $this->products[$product->getId()] = [
                 'type' => $product,
